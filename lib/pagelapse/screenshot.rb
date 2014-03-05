@@ -8,7 +8,7 @@ module Pagelapse
     include Capybara::DSL
 
     # Captures a screenshot of +url+ saving it to +output_path+.
-    def capture(url, output_path, width: 1024, height: 768, full: true)
+    def capture(url, output_path, width: 1024, height: 768, full: false)
       # Browser settings
       page.driver.resize(width, height)
       page.driver.headers = {
