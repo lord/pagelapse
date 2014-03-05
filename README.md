@@ -35,11 +35,9 @@ To pause and resume the background server:
     $ pagelapse pause
     $ pagelapse resume
 
-Note that when you stop the background server, any running pages will resume recording when you start the server again.
-
 ## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/pagelapse/fork )
+1. Fork it ( <http://github.com/lord/pagelapse/fork> )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
