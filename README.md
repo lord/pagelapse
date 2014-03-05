@@ -1,24 +1,41 @@
 # Pagelapse
 
-TODO: Write a gem description
+Generates time-lapses of websites, with ease. Inspirational background music not included.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Pagelapse needs phantomjs to take screenshots, so simply run:
 
-    gem 'pagelapse'
+    $ brew install phantomjs
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+And then install pagelapse:
 
     $ gem install pagelapse
 
 ## Usage
 
-TODO: Write usage instructions here
+Add a page to start capturing:
+
+    $ pagelapse record http://reddit.com
+
+Pagelapse will check the website every 20 seconds for changes. There are some settings, too:
+
+    $ pagelapse record http://reddit.com --interval 60 --width 1200 --height 1000 --full-page false
+
+To view the websites you've recorded in a nice web interface:
+
+    $ pagelapse view
+
+To stop recording a page:
+
+    $ pagelapse stop http://reddit.com
+
+To pause and resume the background server:
+
+    $ pagelapse pause
+    $ pagelapse resume
+
+Note that when you stop the background server, any running pages will resume recording when you start the server again.
 
 ## Contributing
 
