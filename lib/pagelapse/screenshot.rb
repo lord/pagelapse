@@ -39,6 +39,9 @@ module Pagelapse
         # Save screenshot
         page.driver.save_screenshot(output_path, :full => full)
 
+        # If no old file, than always save
+        return true unless old_file
+
         if save_if.call(old_file, output_path)
           true
         else
