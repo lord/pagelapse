@@ -8,13 +8,18 @@ module Pagelapse
     include Capybara::DSL
 
     # Captures a screenshot of +url+ saving it to +output_path+.
-    # TODO ADD TIMEOUT
-    def capture(url, output_path, width: 1024, height: 768, full: false, timeout: false, allow_errors: false)
+    def capture(url, output_path, width: 1024, height: 768, full: false, timeout: false, capture_if: nil)
       # Browser settings
       page.driver.resize(width, height)
       page.driver.headers = {
         "User-Agent" => "Pagelapse #{Pagelapse::VERSION}",
       }
+
+      unless capture_if
+        capture_if = Proc.new do
+          page.driver.status_code == 200
+        end
+      end
 
       # Open page
       visit url
@@ -22,14 +27,12 @@ module Pagelapse
       # Timeout
       sleep timeout if timeout
 
-      if page.driver.status_code == 200
+      if instance_eval(&capture_if)
         # Save screenshot
         page.driver.save_screenshot(output_path, :full => full)
-
-        # Resize image
-        # ...
+        true
       else
-        # Handle error
+        false
       end
     end
 
