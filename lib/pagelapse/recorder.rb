@@ -20,7 +20,7 @@ module Pagelapse
       FileUtils.mkdir_p(File.join 'lapses', @name)
     end
 
-    def on_load(&block)
+    def before_capture(&block)
       @on_load = block
     end
 
