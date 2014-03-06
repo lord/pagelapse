@@ -3,11 +3,15 @@
 module Pagelapse
   class Parser
     def initialize(file)
+      puts "Starting Pagelapse #{Pagelapse::VERSION}"
       @recorders = []
       instance_eval File.read(file), file, 1
       while @recorders.length > 0 do
         @recorders.each do |r|
-          r.capture if r.ready?
+          if r.ready?
+            puts "Capturing #{r.name}"
+            r.capture
+          end
         end
         @recorders.reject! do |r|
           r.expired?

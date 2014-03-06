@@ -48,6 +48,8 @@ module Pagelapse
     Capybara::Poltergeist::Driver.new(app, {
       # Raise JavaScript errors to Ruby
       js_errors: false,
+      phantomjs_logger: File.open(File::NULL, "w"),
+      debug: false,
       # Additional command line options for PhantomJS
       phantomjs_options: ['--ignore-ssl-errors=yes'],
     })

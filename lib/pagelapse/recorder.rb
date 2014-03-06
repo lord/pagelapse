@@ -2,6 +2,7 @@ require 'fileutils'
 module Pagelapse
   class Recorder
     attr_accessor :interval, :duration, :timeout, :width, :height, :expiration
+    attr_reader :name, :url
 
     def initialize(name, url)
       @name = name
