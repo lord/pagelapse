@@ -5,15 +5,17 @@ module Pagelapse
     def initialize(file)
       @recorders = []
       instance_eval File.read(file), file, 1
-      @threads = @recorders.map do |r|
-        Thread.new { r.capture_loop }
-      end
-      @threads.each do |thread|
-        thread.join
+      while @recorders.length > 0 do
+        @recorders.each do |r|
+          r.capture if r.ready?
+        end
+        @recorders.reject! do |r|
+          r.expired?
+        end
       end
     end
 
-    def record(name, url)
+    def record(name, url, interval=20)
       r = Pagelapse::Recorder.new(name, url)
       yield r
       @recorders << r
