@@ -8,7 +8,7 @@ module Pagelapse
     include Capybara::DSL
 
     # Captures a screenshot of +url+ saving it to +output_path+.
-    def capture(url, output_path, width: 1024, height: 768, full: false, timeout: false, capture_if: nil)
+    def capture(url, output_path, width: 1024, height: 768, full: false, timeout: false, capture_if: nil, save_if: nil)
       # Browser settings
       page.driver.resize(width, height)
       page.driver.headers = {
@@ -21,6 +21,12 @@ module Pagelapse
         end
       end
 
+      unless save_if
+        save_if = Proc.new do |old_file, new_file|
+          Digest::MD5.file(old_file).hexdigest != Digest::MD5.file(new_file).hexdigest
+        end
+      end
+
       # Open page
       visit url
 
@@ -28,9 +34,17 @@ module Pagelapse
       sleep timeout if timeout
 
       if instance_eval(&capture_if)
+        old_file = last_file_next_to(output_path)
+
         # Save screenshot
         page.driver.save_screenshot(output_path, :full => full)
-        true
+
+        if save_if.call(old_file, output_path)
+          true
+        else
+          File.delete output_path
+          false
+        end
       else
         false
       end
@@ -40,6 +54,11 @@ module Pagelapse
       Capybara.reset_sessions!
       Capybara.current_session.instance_eval(&block) if block_given?
       self
+    end
+
+    private
+    def last_file_next_to(file)
+      Dir[File.dirname(file) + "/*"].max_by {|f| File.mtime(f)}
     end
   end
 

@@ -16,6 +16,7 @@ module Pagelapse
       @height = 900
       @timer = Time.new 0
       @capture_if = nil
+      @save_if = nil
       FileUtils.mkdir_p(File.join 'lapses', @name)
     end
 
@@ -25,6 +26,10 @@ module Pagelapse
 
     def capture_if(&block)
       @capture_if = block
+    end
+
+    def save_if(&block)
+      @save_if = block
     end
 
     def filename
@@ -48,8 +53,15 @@ module Pagelapse
         ws.start_session(&@on_load)
       else
         ws.start_session
-      end.capture(@url, filename, width: @width, height: @height, timeout: @timeout, capture_if: @capture_if)
-      true
+      end.capture(
+        @url,
+        filename,
+        width: @width,
+        height: @height,
+        timeout: @timeout,
+        capture_if: @capture_if,
+        save_if: @save_if
+      )
     end
   end
 end
