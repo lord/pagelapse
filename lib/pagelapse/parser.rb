@@ -9,8 +9,12 @@ module Pagelapse
       while @recorders.length > 0 do
         @recorders.each do |r|
           if r.ready?
-            puts "Capturing #{r.name}"
-            r.capture
+            print "Checking #{r.name}"
+            if r.capture
+              puts " - captured!"
+            else
+              puts ""
+            end
           end
         end
         @recorders.reject! do |r|
