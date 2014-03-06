@@ -1,7 +1,3 @@
 #!/usr/bin/env ruby
-
 require 'pagelapse'
-begin
-  Pagelapse::Parser.new "./Lapsefile"
-rescue Interrupt
-end
+Pagelapse.cli(ARGV)
