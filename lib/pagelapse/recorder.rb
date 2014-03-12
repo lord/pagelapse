@@ -49,18 +49,16 @@ module Pagelapse
     def capture
       @timer = Time.now
       ws = Pagelapse::Screenshot.new
-      if @on_load
-        ws.start_session(&@on_load)
-      else
-        ws.start_session
-      end.capture(
+
+      ws.capture(
         @url,
         filename,
         width: @width,
         height: @height,
         timeout: @timeout,
         capture_if: @capture_if,
-        save_if: @save_if
+        save_if: @save_if,
+        on_load: @on_load
       )
     end
   end
