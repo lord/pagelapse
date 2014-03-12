@@ -2,6 +2,8 @@
 
 Generates time-lapses of websites, with ease. Inspirational background music not included.
 
+For a short write-up of this project, check out [the blog post I wrote about it](http://lord.io/blog/2014/pagelapse).
+
 ## Installation
 
 Pagelapse needs phantomjs to take screenshots, so simply run:
