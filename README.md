@@ -26,6 +26,19 @@ record "lord", "http://www.lord.io/blog" do |r|
 end
 ```
 
+You can also run Capybara commands before the screenshot is taken:
+
+```ruby
+record "github", "http://github.com/login" do |r|
+  r.interval = 10
+  r.before_capture do
+    page.fill_in('login', :with => 'lord')
+    page.fill_in('password', :with => 'my password here')
+    page.click_button('Sign in')
+  end
+end
+```
+
 There are a couple other settings. The default behavior is capture pages only if they return a HTTP 200. You can change this by setting a `capture_if`, for instance if you only want to record if the page contains certain elements, or based on the status code:
 
 ```ruby
