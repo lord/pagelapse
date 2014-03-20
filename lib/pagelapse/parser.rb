@@ -25,7 +25,7 @@ module Pagelapse
 
     def record(name, url, interval=20)
       r = Pagelapse::Recorder.new(name, url)
-      yield r
+      yield r if block_given?
       @recorders << r
     end
   end
